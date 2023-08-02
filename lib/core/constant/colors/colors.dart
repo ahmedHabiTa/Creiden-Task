@@ -27,9 +27,9 @@ const Color walletColor = Color(0xffFCF2F2);
 const Color ticetTextColor = Color(0xff042A44);
 const Color cartBG = Color(0xFFEBE4E4);
 const Color orderCardBG = Color(0xFFFCFCFC);
-Color purpleColor = const Color(0xfffe1e9a).withOpacity(0.2);
-Color orangeColor = const Color(0xfffea64c).withOpacity(0.2);
-Color blueColor = const Color(0xff254dde).withOpacity(0.2);
+Color purpleColor = const Color(0xfffe1e9a).withOpacity(0.15);
+Color orangeColor = const Color(0xfffea64c).withOpacity(0.15);
+Color blueColor = const Color(0xff254dde).withOpacity(0.15);
 
 List<Color> homeBackgroudGradient = [
   orangeColor,

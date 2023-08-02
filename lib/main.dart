@@ -1,5 +1,4 @@
 import 'package:creiden/core/widgets/show_toast.dart';
-import 'package:creiden/features/todo/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -11,6 +10,7 @@ import 'features/auth/auth_injection.dart';
 import 'features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
 import 'features/auth/presentation/pages/login_screen.dart';
 import 'features/todo/note_injection.dart';
+import 'features/todo/presentation/pages/home_screen.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -106,7 +106,7 @@ class _NotificationsHndlerState extends State<NotificationsHndler> {
                 return Scaffold(
                   body: Center(
                     child: Image.asset('assets/images/creiden_logo.png',
-                        height: 150, width: 250, fit: BoxFit.fill),
+                        height: 70, width: 200, fit: BoxFit.fill),
                   ),
                 );
               }

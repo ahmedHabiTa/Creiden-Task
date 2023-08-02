@@ -1,12 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:creiden/core/usecases/usecases.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constant/colors/colors.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/util/navigator.dart';
+import '../../../../../local_notification.dart';
 import '../../../domain/entities/note_model.dart';
 import '../../../domain/usecases/get_all_notes.dart';
 
@@ -24,7 +25,7 @@ class GetAllNotesCubit extends Cubit<GetAllNotesState> {
   List<NoteModel> _filteredList = [];
   List<NoteModel> get filteredList => _filteredList;
 
-  Future<void> fReadAllNotes() async {
+  Future<void> fReadAllNotes(context) async {
     emit(GetAllNotesLoading());
     final failOrUser = await getAllNotesUsecase(NoParams());
     failOrUser.fold((fail) {
@@ -35,6 +36,7 @@ class GetAllNotesCubit extends Cubit<GetAllNotesState> {
       _noteList = allNotesResponse;
       _filteredList = allNotesResponse;
 
+      sendNoteNotification(context: context);
       emit(GetAllNotesSuccess());
     });
   }

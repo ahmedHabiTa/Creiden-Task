@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
 import 'package:creiden/core/constant/colors/colors.dart';
 import 'package:creiden/features/todo/domain/entities/note_model.dart';
 import 'package:creiden/features/todo/domain/usecases/add_note.dart';
@@ -9,6 +8,7 @@ import 'package:creiden/features/todo/presentation/cubit/get_all_notes/get_all_n
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/widgets/show_toast.dart';
@@ -29,6 +29,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     required String name,
     required String description,
     required GlobalKey<FormState> formKey,
+    required BuildContext context,
   }) async {
     if (!formKey.currentState!.validate()) {
       return;
@@ -51,18 +52,20 @@ class AddNoteCubit extends Cubit<AddNoteState> {
         emit(AddNoteError(message: fail.message));
       }
     }, (allNotesResponse) {
-      sl<GetAllNotesCubit>().fReadAllNotes();
+      sl<GetAllNotesCubit>().fReadAllNotes(context);
       resetParams();
 
       emit(AddNoteSuccess());
     });
   }
 
-  Future<void> fUpdateNote(
-      {required String name,
-      required String description,
-      required GlobalKey<FormState> formKey,
-      required NoteModel noteModel}) async {
+  Future<void> fUpdateNote({
+    required String name,
+    required String description,
+    required GlobalKey<FormState> formKey,
+    required NoteModel noteModel,
+    required BuildContext context,
+  }) async {
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -84,7 +87,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
         emit(AddNoteError(message: fail.message));
       }
     }, (allNotesResponse) {
-      sl<GetAllNotesCubit>().fReadAllNotes();
+      sl<GetAllNotesCubit>().fReadAllNotes(context);
       resetParams();
 
       emit(AddNoteSuccess());
@@ -92,9 +95,9 @@ class AddNoteCubit extends Cubit<AddNoteState> {
   }
 
   List<Map<String, dynamic>> colorList = [
-    {'color': const Color(0xffcf28a9), 'hexColor': '0xffcf28a9'},
+    {'color': const Color(0xffff008d), 'hexColor': '0xffff008d'},
     {'color': const Color(0xff0dc4f4), 'hexColor': '0xff0dc4f4'},
-    {'color': purpleColor, 'hexColor': '0xffff008d'},
+    {'color': const Color(0xffcf28a9), 'hexColor': '0xffcf28a9'},
     {'color': mainColor, 'hexColor': '0xff181743'},
     {'color': const Color(0xff00cf1c), 'hexColor': '0xff00cf1c'},
     {'color': const Color(0xffffee00), 'hexColor': '0xffffee00'},

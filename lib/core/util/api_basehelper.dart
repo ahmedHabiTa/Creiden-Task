@@ -54,8 +54,7 @@ class ApiBaseHelper {
     } on DioError catch (e) {
       log(e.toString());
       log(e.response?.toString() ?? "no response");
-      String message =
-          e.response?.data["message"] ?? tr("error_please_try_again");
+      String message = 'Invalid Email or Password...';
       if (e.type == DioErrorType.sendTimeout ||
           e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.connectTimeout ||

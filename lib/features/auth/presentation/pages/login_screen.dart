@@ -26,111 +26,124 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          SizedBox(height: 100.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Text(
-              'Login',
-              style: TextStyles.textViewRegular20
-                  .copyWith(color: mainColor, fontSize: 32),
-            ),
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                  blueColor.withOpacity(0.1),
+                  purpleColor.withOpacity(0.15),
+                ])),
           ),
-          SizedBox(height: 70.h),
-          Expanded(
-            child: Form(
-              key: formKey,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: blackColor.withOpacity(0.1),
-                        blurRadius: 12,
-                        spreadRadius: 4,
-                      ),
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 40),
-                        Text(
-                          'Email *',
-                          style: TextStyles.textViewMedium15
-                              .copyWith(color: mainColor.withOpacity(0.7)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 100.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Text(
+                  'Login',
+                  style: TextStyles.textViewRegular20
+                      .copyWith(color: mainColor, fontSize: 32),
+                ),
+              ),
+              SizedBox(height: 70.h),
+              Expanded(
+                child: Form(
+                  key: formKey,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
                         ),
-                        const SizedBox(height: 15),
-                        MasterTextField(
-                          controller: emailController,
-                          validate: (value) => Validator.email(value),
-                          hintText: 'Enter your email',
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Password *',
-                          style: TextStyles.textViewMedium15
-                              .copyWith(color: mainColor.withOpacity(0.7)),
-                        ),
-                        const SizedBox(height: 15),
-                        MasterTextField(
-                          controller: passwordController,
-                          validate: (value) =>
-                              Validator.defaultValidator(value),
-                          hintText: 'Enter your password',
-                        ),
-                        const SizedBox(height: 40),
-                        Center(
-                          child: BlocBuilder<LoginCubit, LoginState>(
-                            builder: (context, state) {
-                              if (state is LoginLoading) {
-                                return const Loading();
-                              }
-                              return GestureDetector(
-                                onTap: () {
-                                  context.read<LoginCubit>().fLogin(
-                                      formKey: formKey,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      context: context);
-                                },
-                                child: Container(
-                                  height: 46.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(26),
-                                    gradient: LinearGradient(
-                                      colors: buttomGradient,
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    'Sign In',
-                                    style: TextStyles.textViewRegular16
-                                        .copyWith(color: white),
-                                  )),
-                                ),
-                              );
-                            },
+                        boxShadow: [
+                          BoxShadow(
+                            color: blackColor.withOpacity(0.1),
+                            blurRadius: 12,
+                            spreadRadius: 4,
                           ),
+                        ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 40),
+                            Text(
+                              'Email *',
+                              style: TextStyles.textViewMedium15
+                                  .copyWith(color: mainColor.withOpacity(0.7)),
+                            ),
+                            const SizedBox(height: 15),
+                            MasterTextField(
+                              controller: emailController,
+                              validate: (value) => Validator.email(value),
+                              hintText: 'Enter your email',
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Password *',
+                              style: TextStyles.textViewMedium15
+                                  .copyWith(color: mainColor.withOpacity(0.7)),
+                            ),
+                            const SizedBox(height: 15),
+                            MasterTextField(
+                              controller: passwordController,
+                              validate: (value) =>
+                                  Validator.defaultValidator(value),
+                              hintText: 'Enter your password',
+                            ),
+                            const SizedBox(height: 40),
+                            Center(
+                              child: BlocBuilder<LoginCubit, LoginState>(
+                                builder: (context, state) {
+                                  if (state is LoginLoading) {
+                                    return const Loading();
+                                  }
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.read<LoginCubit>().fLogin(
+                                          formKey: formKey,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          context: context);
+                                    },
+                                    child: Container(
+                                      height: 46.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(26),
+                                        gradient: LinearGradient(
+                                          colors: buttomGradient,
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        'Sign In',
+                                        style: TextStyles.textViewRegular16
+                                            .copyWith(color: white),
+                                      )),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),
@@ -163,11 +176,11 @@ class MasterTextField extends StatelessWidget {
         fillColor: Colors.grey.withOpacity(0.1),
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
       ),

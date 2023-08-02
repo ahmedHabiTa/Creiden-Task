@@ -1,5 +1,6 @@
 import 'package:creiden/core/widgets/show_toast.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failures.dart';
@@ -15,9 +16,8 @@ class DeleteNoteCubit extends Cubit<DeleteNoteState> {
 
   final DeleteNoteUsecase deleteNoteUsecase;
 
-  Future<void> fDeleteNote({
-    required int id,
-  }) async {
+  Future<void> fDeleteNote(
+      {required int id, required BuildContext context}) async {
     emit(DeleteNoteLoading());
     final failOrUser = await deleteNoteUsecase(DeleteNoteParams(id: id));
     failOrUser.fold((fail) {
@@ -25,7 +25,7 @@ class DeleteNoteCubit extends Cubit<DeleteNoteState> {
         emit(DeleteNoteError(message: fail.message));
       }
     }, (allNotesResponse) {
-      sl<GetAllNotesCubit>().fReadAllNotes();
+      sl<GetAllNotesCubit>().fReadAllNotes(context);
       showToastSuccess('Note Deleted Successfully');
       emit(DeleteNoteSuccess());
     });

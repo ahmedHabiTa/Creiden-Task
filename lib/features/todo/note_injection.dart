@@ -41,7 +41,7 @@ Future<void> initNoteInjection(GetIt sl) async {
 List<BlocProvider> noteBlocs(BuildContext context) => [
       BlocProvider<GetAllNotesCubit>(
           create: (BuildContext context) =>
-              sl<GetAllNotesCubit>()..fReadAllNotes()),
+              sl<GetAllNotesCubit>()..fReadAllNotes(context)),
       BlocProvider<AddNoteCubit>(
           create: (BuildContext context) => sl<AddNoteCubit>()),
       BlocProvider<DeleteNoteCubit>(

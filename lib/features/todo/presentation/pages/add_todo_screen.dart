@@ -134,7 +134,9 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey.withOpacity(0.1),
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none,
@@ -179,21 +181,21 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: mainColor.withOpacity(0.7),
+                              color: mainColor.withOpacity(0.5),
                               width: 1,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: mainColor.withOpacity(0.7),
+                              color: mainColor.withOpacity(0.5),
                               width: 1,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: mainColor.withOpacity(0.7),
+                              color: mainColor.withOpacity(0.5),
                               width: 1,
                             ),
                           ),
@@ -206,7 +208,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: mainColor.withOpacity(0.7),
+                              color: mainColor.withOpacity(0.5),
                               width: 1,
                             ),
                           ),
@@ -234,11 +236,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
-                                suffixIcon: Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: mainColor,
-                            )),
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey.withOpacity(0.1),
+                                suffixIcon: const Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: mainColor,
+                                )),
                           );
                         },
                       ),
@@ -264,11 +268,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
-                                suffixIcon: Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: mainColor,
-                            )),
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey.withOpacity(0.1),
+                                suffixIcon: const Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: mainColor,
+                                )),
                           );
                         },
                       ),

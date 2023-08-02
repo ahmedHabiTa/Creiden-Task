@@ -50,9 +50,11 @@ class _AddEditActionButtomsState extends State<AddEditActionButtoms> {
         ? GestureDetector(
             onTap: () {
               context.read<AddNoteCubit>().fAddNote(
-                  formKey: widget.formKey,
-                  name: widget.nameController.text.trim(),
-                  description: widget.desController.text.trim());
+                    formKey: widget.formKey,
+                    name: widget.nameController.text.trim(),
+                    description: widget.desController.text.trim(),
+                    context: context,
+                  );
             },
             child: Container(
               height: 46.h,
@@ -82,7 +84,8 @@ class _AddEditActionButtomsState extends State<AddEditActionButtoms> {
                       noteModel: widget.noteModel!,
                       formKey: widget.formKey,
                       name: widget.nameController.text.trim(),
-                      description: widget.desController.text.trim());
+                      description: widget.desController.text.trim(),
+                      context: context);
                 },
                 child: Container(
                   height: 46.h,
@@ -107,7 +110,7 @@ class _AddEditActionButtomsState extends State<AddEditActionButtoms> {
                 onTap: () {
                   context
                       .read<DeleteNoteCubit>()
-                      .fDeleteNote(id: widget.noteModel!.id);
+                      .fDeleteNote(id: widget.noteModel!.id, context: context);
                   if (widget.scaffoldKey.currentState != null) {
                     widget.scaffoldKey.currentState!.closeDrawer();
                   }
