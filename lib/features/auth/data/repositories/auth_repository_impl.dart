@@ -40,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, User>> autoLogin() async {
     try {
       final token = local.getCacheUserAccessToken();
-      final user = await remote.refreshToken(token: token!);
+      final user = await remote.refreshToken(token: token);
       await local.cacheUserData(user: user);
       await local.cacheUserAccessToken(token: user.data.token);
       return Right(user.data.user);

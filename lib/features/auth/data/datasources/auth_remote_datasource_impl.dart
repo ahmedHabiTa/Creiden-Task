@@ -38,7 +38,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<LoginResponse> refreshToken({required String token}) async {
+  Future<LoginResponse> refreshToken({required String? token}) async {
     try {
       final response = await helper.post(
         token: token,
