@@ -36,7 +36,7 @@ class GetAllNotesCubit extends Cubit<GetAllNotesState> {
       _noteList = allNotesResponse;
       _filteredList = allNotesResponse;
 
-      sendNoteNotification(context: context);
+      sendNoteNotification(context: context, noteList: _noteList);
       emit(GetAllNotesSuccess());
     });
   }

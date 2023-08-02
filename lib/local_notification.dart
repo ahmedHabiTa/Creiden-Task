@@ -1,21 +1,21 @@
-import 'package:creiden/features/todo/presentation/cubit/get_all_notes/get_all_notes_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-sendNoteNotification({required BuildContext context}) {
-  final notesList = context.read<GetAllNotesCubit>().noteList;
+import 'features/todo/domain/entities/note_model.dart';
+
+sendNoteNotification(
+    {required BuildContext context, required List<NoteModel> noteList}) {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  for (int index = 0; index < notesList.length; index++) {
+  for (int index = 0; index < noteList.length; index++) {
     final format = DateFormat('dd - MMMM - yyyy', 'en_US');
-    final date = format.parse(notesList[index].date);
+    final date = format.parse(noteList[index].date);
     final location = tz.getLocation('Africa/Cairo');
     final tzDate = tz.TZDateTime.from(date, location);
-    String timeStr = notesList[index].time;
+    String timeStr = noteList[index].time;
     DateTime dateTime = DateFormat('hh:mm a').parse(timeStr);
     String formattedTime = DateFormat('HH:mm').format(dateTime);
     final timeZone = tz.TZDateTime(
@@ -29,9 +29,9 @@ sendNoteNotification({required BuildContext context}) {
     );
     if (tzDate.day == tz.TZDateTime.now(location).day) {
       flutterLocalNotificationsPlugin.zonedSchedule(
-        notesList[index].id,
+        noteList[index].id,
         'Remider for Upcomming Task',
-        notesList[index].name,
+        noteList[index].name,
         timeZone,
         const NotificationDetails(
             android: AndroidNotificationDetails('channel id', 'channel name',
