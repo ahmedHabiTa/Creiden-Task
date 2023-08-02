@@ -1,23 +1,29 @@
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:creiden/features/core/constant/colors/colors.dart';
+import 'package:creiden/core/constant/colors/colors.dart';
+import 'package:creiden/features/todo/domain/entities/note_model.dart';
 import 'package:creiden/features/todo/domain/usecases/add_note.dart';
+import 'package:creiden/features/todo/domain/usecases/update_note.dart';
 import 'package:creiden/features/todo/presentation/cubit/get_all_notes/get_all_notes_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/widgets/show_toast.dart';
 import '../../../../../injection_container.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/widgets/show_toast.dart';
 
 part 'add_note_state.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
-  AddNoteCubit({required this.addNoteUsecase}) : super(AddNoteInitial());
+  AddNoteCubit({
+    required this.addNoteUsecase,
+    required this.updateNoteUsecase,
+  }) : super(AddNoteInitial());
 
   final AddNoteUsecase addNoteUsecase;
+  final UpdateNoteUsecase updateNoteUsecase;
 
   Future<void> fAddNote({
     required String name,
@@ -33,7 +39,40 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     }
     emit(AddNoteLoading());
     final failOrUser = await addNoteUsecase(AddNoteParams(
-      id: Random().nextInt(4),
+      id: Random().nextInt(90000) + 10000,
+      name: name,
+      description: description,
+      color: selectedColor!,
+      date: dateController.text,
+      time: timeController.text,
+    ));
+    failOrUser.fold((fail) {
+      if (fail is NoteFailure) {
+        emit(AddNoteError(message: fail.message));
+      }
+    }, (allNotesResponse) {
+      sl<GetAllNotesCubit>().fReadAllNotes();
+      resetParams();
+
+      emit(AddNoteSuccess());
+    });
+  }
+
+  Future<void> fUpdateNote(
+      {required String name,
+      required String description,
+      required GlobalKey<FormState> formKey,
+      required NoteModel noteModel}) async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    if (selectedColor == null) {
+      showToastError('Color is Required...');
+      return;
+    }
+    emit(AddNoteLoading());
+    final failOrUser = await updateNoteUsecase(AddNoteParams(
+      id: noteModel.id,
       name: name,
       description: description,
       color: selectedColor!,
@@ -117,6 +156,14 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     selectedColor = null;
     timeController.clear();
     dateController.clear();
+    emit(AddNoteInitial());
+    emit(ChangeAddNoteState());
+  }
+
+  initParams({required NoteModel noteModel}) {
+    selectedColor = noteModel.color;
+    dateController.text = noteModel.date;
+    timeController.text = noteModel.time;
     emit(AddNoteInitial());
     emit(ChangeAddNoteState());
   }

@@ -3,8 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constant/colors/colors.dart';
-import '../../../core/constant/styles/styles.dart';
+import '../../../../core/constant/colors/colors.dart';
+import '../../../../core/constant/styles/styles.dart';
 
 class TodoCard extends StatelessWidget {
   final NoteModel noteModel;

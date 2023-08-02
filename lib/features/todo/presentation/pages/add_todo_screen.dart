@@ -1,18 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:creiden/features/todo/domain/entities/note_model.dart';
 import 'package:creiden/features/todo/presentation/cubit/add_note/add_note_cubit.dart';
 import 'package:creiden/features/todo/presentation/widgets/back_ground_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constant/colors/colors.dart';
-import '../../../core/constant/styles/styles.dart';
+import '../../../../core/constant/colors/colors.dart';
+import '../../../../core/constant/styles/styles.dart';
+import '../widgets/add_edit_action_buttom.dart';
 
 class AddTodoScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final NoteModel? noteModel;
   const AddTodoScreen({
     Key? key,
     required this.scaffoldKey,
+    required this.noteModel,
   }) : super(key: key);
 
   @override
@@ -42,30 +46,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           }
         },
         child: Scaffold(
-          floatingActionButton: GestureDetector(
-            onTap: () {
-              context.read<AddNoteCubit>().fAddNote(
-                  formKey: formKey,
-                  name: nameController.text.trim(),
-                  description: desController.text.trim());
-            },
-            child: Container(
-              height: 46.h,
-              width: 132.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(26),
-                gradient: LinearGradient(
-                  colors: buttomGradient,
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-              ),
-              child: Center(
-                  child: Text(
-                'Add',
-                style: TextStyles.textViewRegular16.copyWith(color: white),
-              )),
-            ),
+          floatingActionButton: AddEditActionButtoms(
+            noteModel: widget.noteModel,
+            desController: desController,
+            formKey: formKey,
+            nameController: nameController,
+            scaffoldKey: widget.scaffoldKey,
           ),
           body: BackgroundContainer(
             gradientList: addTodoGradient,
@@ -136,8 +122,9 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                         style: TextStyles.textViewRegular12
                             .copyWith(color: mainColor.withOpacity(0.7)),
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
+                      Stack(
+                        // mainAxisSize: MainAxisSize.min,
+                        alignment: Alignment.bottomCenter,
                         children: [
                           TextFormField(
                             controller: nameController,

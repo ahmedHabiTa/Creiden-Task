@@ -1,7 +1,8 @@
+import 'package:creiden/features/todo/presentation/widgets/filter_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constant/colors/colors.dart';
-import '../../../core/constant/styles/styles.dart';
+import '../../../../core/constant/colors/colors.dart';
+import '../../../../core/constant/styles/styles.dart';
 
 class HomeAppbar extends StatelessWidget {
   const HomeAppbar({super.key});
@@ -25,7 +26,14 @@ class HomeAppbar extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => const AlertDialog(
+                content: FilterDialog(),
+              ),
+            );
+          },
           icon: ShaderMask(
             shaderCallback: (Rect bounds) {
               return LinearGradient(

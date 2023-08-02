@@ -9,6 +9,8 @@ abstract class GetAllNotesState extends Equatable {
 
 class GetAllNotesInitial extends GetAllNotesState {}
 
+class ChangeFilterNoteState extends GetAllNotesState {}
+
 class GetAllNotesLoading extends GetAllNotesState {}
 
 class GetAllNotesSuccess extends GetAllNotesState {}
